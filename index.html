@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XOS - حلول الأنظمة التشغيلية المتكاملة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #f59e0b;
+            --success-color: #10b981;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --bg-light: #f9fafb;
+            --white: #ffffff;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Portfolio Styles */
+        .portfolio-container {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .portfolio-container.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            transition: var(--transition);
+            position: relative;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .admin-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+
+        .admin-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            padding: 4rem 2rem;
+            background: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-content .subtitle {
+            font-size: 1.8rem;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-content .description {
+            font-size: 1.2rem;
+            color: var(--text-dark);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-outline {
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .hero-image {
+            text-align: center;
+        }
+
+        .company-logo {
+            width: 400px;
+            height: 400px;
+            border-radius: 20px;
+            object-fit: cover;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .company-logo:hover {
+            transform: scale(1.05);
+        }
+
+        /* Services Section */
+        .services {
+            padding: 4rem 2rem;
+            background: var(--bg-light);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 3rem;
+        }
+
+        .services-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+        }
+
+        .service-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            color: white;
+        }
+
+        .service-title {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .service-description {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+
+        .service-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-features li {
+            padding: 0.3rem 0;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .service-features li i {
+            color: var(--success-color);
+            font-size: 0.8rem;
+        }
+
+        .btn-book {
+            width: 100%;
+            background: linear-gradient(135deg, var(--success-color), #059669);
+            color: white;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            margin-top: auto;
+        }
+
+        .btn-book:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 4rem 2rem;
+            background: white;
+        }
+
+        .features-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 15px;
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            background: var(--bg-light);
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .feature-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .feature-description {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 4rem 2rem;
+            background: var(--bg-light);
+        }
+
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .contact-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: var(--transition);
+        }
+
+        .contact-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .contact-icon {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .contact-label {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-value {
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        /* Admin Panel Styles */
+        .admin-container {
+            display: none;
+            background: var(--bg-light);
+            min-height: 100vh;
+        }
+
+        .admin-container.active {
+            display: block;
+        }
+
+        .admin-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .admin-header h1 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .admin-nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .admin-nav button {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .admin-nav button:hover,
+        .admin-nav button.active {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        .admin-content {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .admin-section {
+            display: none;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .admin-section.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn-save {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+        }
+
+        .services-list {
+            margin-top: 2rem;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .service-item {
+            background: var(--bg-light);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .service-info h3 {
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .service-info p {
+            color: var(--text-light);
+            font-size: 0.85rem;
+        }
+
+        .service-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-edit,
+        .btn-delete {
+            padding: 0.4rem 0.8rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.85rem;
+        }
+
+        .btn-edit {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-delete {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-edit:hover,
+        .btn-delete:hover {
+            opacity: 0.8;
+            transform: translateY(-2px);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 2000;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .company-logo {
+                width: 300px;
+                height: 300px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-nav {
+                justify-content: center;
+            }
+        }
+
+        /* Scrollbar Styling */
+        .services-list::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .services-list::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .services-list::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 10px;
+        }
+
+        .services-list::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Portfolio View -->
+    <div class="portfolio-container active" id="portfolioView">
+        <nav>
+            <div class="nav-container">
+                <div class="logo">XOS</div>
+                <ul class="nav-links">
+                    <li><a href="#home">الرئيسية</a></li>
+                    <li><a href="#services">الخدمات</a></li>
+                    <li><a href="#features">المميزات</a></li>
+                    <li><a href="#contact">تواصل</a></li>
+                </ul>
+                <a href="#" class="admin-btn" onclick="showAdminPanel()">
+                    <i class="fas fa-cog"></i> لوحة التحكم
+                </a>
+            </div>
+        </nav>
+
+        <section class="hero" id="home">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <h1>XOS</h1>
+                    <p class="subtitle">حلول الأنظمة التشغيلية المتكاملة</p>
+                    <p class="description">
+                        نقدم أكثر من 18 حلولاً برمجياً متطوراً لإدارة جميع جوانب عملك. من المحاسبة إلى التسويق، من نقاط البيع إلى إدارة الموارد البشرية، نوفر لك الأدوات التي تحتاجها للنجاح.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="#services" class="btn btn-primary">
+                            <i class="fas fa-rocket"></i> استكشف الخدمات
+                        </a>
+                        <a href="#contact" class="btn btn-outline">
+                            <i class="fas fa-phone"></i> تواصل معنا
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="https://picsum.photos/seed/xoslogo/400/400" alt="XOS" class="company-logo" id="companyLogo">
+                </div>
+            </div>
+        </section>
+
+        <section class="services" id="services">
+            <h2 class="section-title">خدماتنا</h2>
+            <p class="section-subtitle">حلول متكاملة لإدارة جميع جوانب عملك</p>
+            <div class="services-grid" id="servicesGrid">
+                <!-- Services will be dynamically added -->
+            </div>
+        </section>
+
+        <section class="features" id="features">
+            <h2 class="section-title">لماذا تختار XOS؟</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="feature-title">آمن وموثوق</h3>
+                    <p class="feature-description">نظام محمي بأحدث تقنيات التشفير والأمان</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="feature-title">متوافق مع جميع الأجهزة</h3>
+                    <p class="feature-description">يعمل على الكمبيوتر والجوال والتابلت</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="feature-title">تقارير متقدمة</h3>
+                    <p class="feature-description">تحليلات مفصلة لأداء عملك</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3 class="feature-title">دعم فني 24/7</h3>
+                    <p class="feature-description">فريق دعم متخصص جاهز للمساعدة</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact" id="contact">
+            <div class="contact-container">
+                <h2 class="section-title">تواصل معنا</h2>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-label">الهاتف</div>
+                        <div class="contact-value" id="contactPhone">+201063942602</div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div class="contact-label">واتساب</div>
+                        <div class="contact-value" id="contactWhatsapp">+201063942602</div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-label">البريد الإلكتروني</div>
+                        <div class="contact-value" id="contactEmail">info@xos.com</div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-label">العنوان</div>
+                        <div class="contact-value" id="contactAddress">عمارات العبور - مصر الجديده - مصر</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Admin Panel -->
+    <div class="admin-container" id="adminPanel">
+        <div class="admin-header">
+            <h1>لوحة تحكم XOS</h1>
+            <div class="admin-nav">
+                <button class="active" onclick="switchAdminSection('company')">بيانات الشركة</button>
+                <button onclick="switchAdminSection('services')">الخدمات</button>
+                <button onclick="switchAdminSection('contact')">معلومات التواصل</button>
+                <button onclick="showPortfolio()">
+                    <i class="fas fa-eye"></i> معاينة الموقع
+                </button>
+            </div>
+        </div>
+
+        <div class="admin-content">
+            <!-- Company Information Section -->
+            <div class="admin-section active" id="companySection">
+                <h2>بيانات الشركة</h2>
+                <form onsubmit="saveCompanyInfo(event)">
+                    <div class="form-group">
+                        <label>اسم الشركة</label>
+                        <input type="text" id="companyName" value="XOS" required>
+                    </div>
+                    <div class="form-group">
+                        <label>الوصف الرئيسي</label>
+                        <textarea id="companyDescription" required>نقدم أكثر من 18 حلولاً برمجياً متطوراً لإدارة جميع جوانب عملك. من المحاسبة إلى التسويق، من نقاط البيع إلى إدارة الموارد البشرية، نوفر لك الأدوات التي تحتاجها للنجاح.</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>رابط الشعار</label>
+                        <input type="url" id="companyImage" placeholder="https://example.com/logo.jpg">
+                    </div>
+                    <button type="submit" class="btn-save">
+                        <i class="fas fa-save"></i> حفظ التغييرات
+                    </button>
+                </form>
+            </div>
+
+            <!-- Services Section -->
+            <div class="admin-section" id="servicesSection">
+                <h2>إدارة الخدمات</h2>
+                <form onsubmit="addService(event)">
+                    <div class="form-group">
+                        <label>اسم الخدمة</label>
+                        <input type="text" id="serviceName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>الوصف</label>
+                        <textarea id="serviceDescription" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>الأيقونة (Font Awesome)</label>
+                        <input type="text" id="serviceIcon" placeholder="fas fa-cash-register" required>
+                    </div>
+                    <div class="form-group">
+                        <label>المميزات (سطر لكل ميزة)</label>
+                        <textarea id="serviceFeatures" placeholder="ميزة 1&#10;ميزة 2&#10;ميزة 3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>رقم الواتساب للحجز</label>
+                        <input type="tel" id="serviceWhatsapp" placeholder="1063942602" required>
+                    </div>
+                    <button type="submit" class="btn-save">
+                        <i class="fas fa-plus"></i> إضافة خدمة
+                    </button>
+                </form>
+                <div class="services-list" id="servicesList">
+                    <!-- Services will be dynamically added -->
+                </div>
+            </div>
+
+            <!-- Contact Section -->
+            <div class="admin-section" id="contactSection">
+                <h2>معلومات التواصل</h2>
+                <form onsubmit="saveContactInfo(event)">
+                    <div class="form-group">
+                        <label>الهاتف</label>
+                        <input type="tel" id="adminPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label>واتساب</label>
+                        <input type="tel" id="adminWhatsapp" required>
+                    </div>
+                    <div class="form-group">
+                        <label>البريد الإلكتروني</label>
+                        <input type="email" id="adminEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label>العنوان</label>
+                        <input type="text" id="adminAddress" required>
+                    </div>
+                    <button type="submit" class="btn-save">
+                        <i class="fas fa-save"></i> حفظ التغييرات
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // Initialize data structure with all services
+        let xosData = {
+            company: {
+                name: 'XOS',
+                description: 'نقدم أكثر من 18 حلولاً برمجياً متطوراً لإدارة جميع جوانب عملك. من المحاسبة إلى التسويق، من نقاط البيع إلى إدارة الموارد البشرية، نوفر لك الأدوات التي تحتاجها للنجاح.',
+                image: 'https://picsum.photos/seed/xoslogo/400/400'
+            },
+            services: [
+                {
+                    name: 'نظام المحاسبة',
+                    description: 'نظام محاسبي متكامل لإدارة جميع المعامللات المالية وإعداد التقارير المالية.',
+                    icon: 'fas fa-calculator',
+                    features: ['إدارة القيود المحاسبية', 'تقارير مالية شاملة', 'ميزانية عمومية', 'كشف الحسابات', 'ضريبة القيمة المضافة'],
+                    whatsapp: '1063942602'
+                },
+                {
+                    name: 'Accounts',
+                    description: 'إدارة الحسابات والميزانيات مع تتبع شامل للمدفوعات والمستحقات.',
+                    icon: 'fas fa-wallet',
+                    features: ['إدارة الحسابات الدائنة', 'إدارة الحسابات المدينة', 'تسوية الحسابات', 'تتبع المدفوعات', 'إدارة الائتمان'],
+                    whatsapp: '1063942602'
+                },
+                {
+                    name: 'تطبيق العميل',
+                    description: 'تطبيق موبايل مخصص للعملاء لتصفح المنتجات والطلبات وإدارة الحسابات.',
+                    icon: 'fas fa-mobile-user',
+                    features: ['تصفح المنتجات', 'إدارة الطلبات', 'تتبع الشحنات', 'المحفظة الإلكترونية', 'الإشعارات الفورية'],
+                    whatsapp: '1063942602'
+                },
+                {
+                    name: 'تطبيق التوصيل',
+                    description: 'تطبيق متكامل لسائقين التوصيل مع تتبع مباشر وإدارة الطلبات.',
+                    icon: 'fas fa-truck',
+                    features: ['تتبع GPS مباشر', 'إدارة الطلبات', 'تحسين المسارات', 'إثبات التسليم', 'تقييم الخدمة'],
+                    whatsapp: '1063942602'
+                },
+                {
+                    name: 'مركز الاتصال',
+                    description: 'نظام متكامل لإدارة مركز الاتصال مع تسجيل المكالمات وتوزيعها.',
+                    icon: 'fas fa-headset',
+                    features: ['توزيع المكالمات', 'تسجيل المكالمات', 'الرد الصوتي التفاعلي', 'تقارير الأداء', 'إدارة الحملات'],
+                    whatsapp: '1063942602'
+                },
+                {
+                    name: 'نظام إدارة علاقات العملاء',
+                    description: 'نظام CRM متقدم لإدارة علاقات العملاء وزيادة المبيعات.',
+                    icon: 'fas fa-users-cog',
+                    features: ['قاعدة بيانات العملاء', 'تتبع التفاعلات', 'إدارة المبيعات', 'الحملات التسويقية', 'تحليل العملاء'],
+                    whatsapp: '1063942602'
+                },
+                {
+                    name: 'مدير الموارد البشرية',
+                    description: 'نظام شامل لإدارة الموارد البشرية من التوظيف إلى الرواتب.',
+                    icon: 'fas fa-user-tie',
+                    features: ['إدارة الموظفين', 'نظام الحضور والانصراف', 'الرواتب والحوافز', 'تقييم الأداء', 'إدارة الإجازات'],
+                    whatsapp: '1063942602'
+                },
+                {
+                    name: 'نظام إدارة المخزون',
+                    description: 'نظام متطور لإدارة المخزون والمستودعات مع تتبع دقيق.',
+                    icon: 'fas fa-warehouse',
+                    features: ['تتبع المخزون', 'إدارة المستودعات', 'الباركود', 'تنبيهات النقص', 'تقارير المخزون'],
+                    whatsapp: '1063942602'
+                },
+                {
+                    name: 'صفحة هبوط',
+                    description: 'تصميم صفحات هبوط احترافية لزيادة التحويلات وجذب العملاء.',
+                    icon: 'fas fa-rocket',
+                    features: ['تصميم احترافي', 'تحسين محركات البحث', 'نماذج تواصل', 'تحليلات الأداء', 'تجاوب مع جميع الأجهزة'],
+                    whatsapp: '1063942602'
+                },
+                {
+                    name: 'نظام الخدمات اللوجستية',
+                    description: 'حل متكامل لإدارة العمليات اللوجستية وسلسلة التوريد.',
+                    icon: 'fas fa-shipping-fast',
+                    features: ['إدارة الشحنات', 'تتبع البضائع', 'إدارة النقل', 'تحسين التكاليف', 'تقارير اللوجستيات'],
+                    whatsapp: '1063942602'
+                },
+                {
+                    name: 'نظام التسويق',
+                    description: 'أدوات تسويقية متقدمة لإدارة الحملات وزيادة المبيعات.',
+                    icon: 'fas fa-bullhorn',
+                    features: ['إدارة الحملات', 'البريد الإلكتروني', 'الرسائل النصية', 'تحليلات التسويق', 'إدارة العملاء المحتملين'],
+                    whatsapp: '1063942602'
+                },
+                {
+                    name: 'وحدات عرض معيارية',
+                    description: 'نظام مرن للوحدات المعيارية وقوائم العرض المتنوعة.',
+                    icon: 'fas fa-th-large',
+                    features: ['وحدات قابلة للتخصيص', 'قوائم عرض متعددة', 'إدارة الأسعار', 'العروض الترويجية', 'إدارة التصنيفات'],
+                    whatsapp: '1063942602'
+                },
+                {
+                    name: 'نظام الدفع الفوري',
+                    description: 'حلول دفع إلكتروني آمنة وسريعة للمعاملات المالية.',
+                    icon: 'fas fa-credit-card',
+                    features: ['دفع آمن', 'بطاقات الائتمان', 'المحافظ الإلكترونية', 'تحويلات بنكية', 'تأكيدات فورية'],
+                    whatsapp: '1063942602'
+                },
+                {
+                    name: 'نظام نقاط البيع المتكامل',
+                    description: 'نظام POS متكامل مع ERP لإدارة المبيعات والمخزون والمحاسبة.',
+                    icon: 'fas fa-cash-register',
+                    features: ['إدارة المبيعات', 'متابعة المخزون', 'تقارير مفصلة', 'دفع إلكتروني', 'إدارة العملاء'],
+                    whatsapp: '1063942602'
+                },
+                {
+                    name: 'إدارة الملفات الشخصية',
+                    description: 'نظام لإدارة الملفات الشخصية للموظفين والعملاء والشركاء.',
+                    icon: 'fas fa-id-card',
+                    features: ['ملفات تعريفية', 'إدارة الصلاحيات', 'التحقق من الهوية', 'إدارة الوثائق', 'سجل النشاطات'],
+                    whatsapp: '1063942602'
+                },
+                {
+                    name: 'نظام رمز الاستجابة السريعة',
+                    description: 'نظام متكامل لإنشاء وإدارة رموز QR للمختلف الاستخدامات.',
+                    icon: 'fas fa-qrcode',
+                    features: ['إنشاء رموز QR', 'تتبع المسح', 'رموز ديناميكية', 'تحليلات الاستخدام', 'تخصيص التصميم'],
+                    whatsapp: '1063942602'
+                },
+                {
+                    name: 'نظام التقارير المتقدم',
+                    description: 'نظام تقارير شامل مع تحليلات متقدمة ورسوم بيانية تفاعلية.',
+                    icon: 'fas fa-chart-bar',
+                    features: ['تقارير مخصصة', 'رسوم بيانية', 'تحليلات متقدمة', 'تصدير البيانات', 'لوحات تحكم تفاعلية'],
+                    whatsapp: '1063942602'
+                },
+                {
+                    name: 'نظام إدارة الموردين',
+                    description: 'نظام متكامل لإدارة الموردين والمشتريات وعلاقات العمل.',
+                    icon: 'fas fa-handshake',
+                    features: ['إدارة الموردين', 'طلبات الشراء', 'تقييم الموردين', 'إدارة العقود', 'تتبع المشتريات'],
+                    whatsapp: '1063942602'
+                }
+            ],
+            contact: {
+                phone: '+201063942602',
+                whatsapp: '+201063942602',
+                email: 'info@xos.com',
+                address: ' عمارات العبور - مصر الجديده - مصر'
+            }
+        };
+
+        // Load data from localStorage
+        function loadData() {
+            const savedData = localStorage.getItem('xosData');
+            if (savedData) {
+                xosData = JSON.parse(savedData);
+            }
+            updatePortfolio();
+        }
+
+        // Save data to localStorage
+        function saveData() {
+            localStorage.setItem('xosData', JSON.stringify(xosData));
+            showToast('تم حفظ التغييرات بنجاح!');
+        }
+
+        // Update portfolio display
+        function updatePortfolio() {
+            // Update company info
+            document.getElementById('companyLogo').src = xosData.company.image;
+            
+            // Update services
+            const servicesGrid = document.getElementById('servicesGrid');
+            servicesGrid.innerHTML = '';
+            xosData.services.forEach(service => {
+                const serviceCard = document.createElement('div');
+                serviceCard.className = 'service-card';
+                serviceCard.innerHTML = `
+                    <div class="service-icon">
+                        <i class="${service.icon}"></i>
+                    </div>
+                    <h3 class="service-title">${service.name}</h3>
+                    <p class="service-description">${service.description}</p>
+                    <ul class="service-features">
+                        ${service.features.slice(0, 3).map(feature => `<li><i class="fas fa-check-circle"></i> ${feature}</li>`).join('')}
+                        ${service.features.length > 3 ? `<li><i class="fas fa-plus-circle"></i> و ${service.features.length - 3} ميزات أخرى</li>` : ''}
+                    </ul>
+                    <a href="#" class="btn-book" onclick="bookService('${service.name}', '${service.whatsapp}')">
+                        <i class="fab fa-whatsapp"></i> احجز الآن
+                    </a>
+                `;
+                servicesGrid.appendChild(serviceCard);
+            });
+
+            // Update contact info
+            document.getElementById('contactPhone').textContent = xosData.contact.phone;
+            document.getElementById('contactWhatsapp').textContent = xosData.contact.whatsapp;
+            document.getElementById('contactEmail').textContent = xosData.contact.email;
+            document.getElementById('contactAddress').textContent = xosData.contact.address;
+        }
+
+        // Book service via WhatsApp
+        function bookService(serviceName, whatsappNumber) {
+            const message = encodeURIComponent(
+                `مرحباً، أود الاستفسار عن خدمة: ${serviceName}\n\n` +
+                `الرجاء تزويدي بالمعلومات التالية:\n` +
+                `- تفاصيل الخدمة الكاملة\n` +
+                `- الأسعار والباقات المتاحة\n` +
+                `- موعد للتوضيح والعرض\n` +
+                `- متطلبات التطبيق\n\n` +
+                `شكراً لكم.\n` +
+                `تم الإرسال من موقع XOS`
+            );
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // Show admin panel
+        function showAdminPanel() {
+            document.getElementById('portfolioView').classList.remove('active');
+            document.getElementById('adminPanel').classList.add('active');
+            loadAdminData();
+        }
+
+        // Show portfolio
+        function showPortfolio() {
+            document.getElementById('adminPanel').classList.remove('active');
+            document.getElementById('portfolioView').classList.add('active');
+        }
+
+        // Switch admin section
+        function switchAdminSection(section) {
+            // Update nav buttons
+            document.querySelectorAll('.admin-nav button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Update sections
+            document.querySelectorAll('.admin-section').forEach(sec => {
+                sec.classList.remove('active');
+            });
+            document.getElementById(section + 'Section').classList.add('active');
+        }
+
+        // Load admin data
+        function loadAdminData() {
+            // Load company info
+            document.getElementById('companyName').value = xosData.company.name;
+            document.getElementById('companyDescription').value = xosData.company.description;
+            document.getElementById('companyImage').value = xosData.company.image;
+
+            // Load contact info
+            document.getElementById('adminPhone').value = xosData.contact.phone;
+            document.getElementById('adminWhatsapp').value = xosData.contact.whatsapp;
+            document.getElementById('adminEmail').value = xosData.contact.email;
+            document.getElementById('adminAddress').value = xosData.contact.address;
+
+            // Load services list
+            updateServicesList();
+        }
+
+        // Save company info
+        function saveCompanyInfo(event) {
+            event.preventDefault();
+            xosData.company.name = document.getElementById('companyName').value;
+            xosData.company.description = document.getElementById('companyDescription').value;
+            xosData.company.image = document.getElementById('companyImage').value || xosData.company.image;
+            saveData();
+            updatePortfolio();
+        }
+
+        // Save contact info
+        function saveContactInfo(event) {
+            event.preventDefault();
+            xosData.contact.phone = document.getElementById('adminPhone').value;
+            xosData.contact.whatsapp = document.getElementById('adminWhatsapp').value;
+            xosData.contact.email = document.getElementById('adminEmail').value;
+            xosData.contact.address = document.getElementById('adminAddress').value;
+            saveData();
+            updatePortfolio();
+        }
+
+        // Add service
+        function addService(event) {
+            event.preventDefault();
+            const service = {
+                name: document.getElementById('serviceName').value,
+                description: document.getElementById('serviceDescription').value,
+                icon: document.getElementById('serviceIcon').value,
+                features: document.getElementById('serviceFeatures').value.split('\n').filter(f => f.trim()),
+                whatsapp: document.getElementById('serviceWhatsapp').value
+            };
+            xosData.services.push(service);
+            saveData();
+            updatePortfolio();
+            updateServicesList();
+            event.target.reset();
+        }
+
+        // Update services list in admin
+        function updateServicesList() {
+            const servicesList = document.getElementById('servicesList');
+            servicesList.innerHTML = '';
+            xosData.services.forEach((service, index) => {
+                const serviceItem = document.createElement('div');
+                serviceItem.className = 'service-item';
+                serviceItem.innerHTML = `
+                    <div class="service-info">
+                        <h3>${service.name}</h3>
+                        <p>${service.description.substring(0, 80)}...</p>
+                    </div>
+                    <div class="service-actions">
+                        <button class="btn-delete" onclick="deleteService(${index})">
+                            <i class="fas fa-trash"></i> حذف
+                        </button>
+                    </div>
+                `;
+                servicesList.appendChild(serviceItem);
+            });
+        }
+
+        // Delete service
+        function deleteService(index) {
+            if (confirm('هل أنت متأكد من حذف هذه الخدمة؟')) {
+                xosData.services.splice(index, 1);
+                saveData();
+                updatePortfolio();
+                updateServicesList();
+            }
+        }
+
+        // Show toast notification
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', loadData);
+    </script>
+</body>
+</html>
